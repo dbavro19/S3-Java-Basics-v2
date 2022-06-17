@@ -23,36 +23,21 @@ import java.security.SecureRandom;
 public class S3Factory {
 
 
-    //public static final String S3_ENDPOINT = "http://10.246.22.164:9020";
-    //public static final String S3_ENDPOINT = "http://131351993663399907.public.ecstestdrive.com"; //TEST DRIVE
-    //public static final String S3_ACCESS_KEY_ID = "131351993663399907@ecstestdrive.emc.com";
-    //public static final String S3_SECRET_KEY = "Qgr64jxhpWBjsL1EWp1xK0u8lGTB/ZuojmGHTvfp";
-    //public static final String S3_BUCKET = "metadatabucket"; 
-    
-    //AWS
-	//public static final String S3_ENDPOINT = "http://s3.amazonaws.com"; // endpoint AWS
-    //public static final String S3_ACCESS_KEY_ID = "AKIAUOSPVP5C2T6RXN6L"; // AWS
-    //public static final String S3_SECRET_KEY = "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"; //AWS Secret Key
-    //public static final String S3_BUCKET = "domslockedbucket";
+
     
     //ECS
     public static final String S3_ENDPOINT = "http://10.246.22.121:9020"; // endpoint ECS
-    //public static final String S3_ACCESS_KEY_ID = "AKIAA4B217833F7A599A";
-    //public static final String S3_SECRET_KEY = "dtomdFshXb9bWelb4GZ7FhhQCnYxYYpsg1hzvYaE"; //dom
-    //public static final String S3_SECRET_KEY = "ge+fX9o6rm7hrM22GhV+fss3yW27xOGOtUQulGHA"; // CDVR
-    //public static final String S3_BUCKET = "testtest";
-    //public static final String S3_NAMESPACE = "demo";
-    
+
     //Object Scale
     //public static final String S3_ENDPOINT = "http://10.246.152.175:80"; // endpoint ECS
     public static final String S3_ACCESS_KEY_ID = "dom";
-    //public static final String S3_SECRET_KEY = "hRdqauOJiwpY6kbx782FFediQJJ89Op8T12ahK9M"; //dom
+    //public static final String S3_SECRET_KEY = ""; //dom
     public static final String S3_SECRET_KEY = "hRdqauOJiwpY6kbx782FFediQJJ89Op8T12ahK9M"; // 3.6.2 IAM
-    public static final String S3_BUCKET = "bucket1";
+    public static final String S3_BUCKET = "copytest";
     //public static final String S3_NAMESPACE = "demo";
     
 
-    public static final String S3_VERSIONBUCKET = "lockingbucket";
+    public static final String S3_VERSIONBUCKET = "copytest";
 
 
     /*
