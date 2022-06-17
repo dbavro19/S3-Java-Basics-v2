@@ -35,6 +35,8 @@ public class _00_CreateBucket_ecs {
         s3.createBucket(key);
         
 
+        
+
     	System.out.println( String.format("Successfully created bucket:" + key ));
     }
 }

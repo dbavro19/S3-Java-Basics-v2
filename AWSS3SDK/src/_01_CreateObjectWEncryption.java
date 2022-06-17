@@ -45,12 +45,26 @@ import java.security.SecureRandom;
 
 import org.apache.log4j.Logger;
 
-public class _01_CreateObject {
+public class _01_CreateObjectWEncryption {
+	
+	
+    private static SSECustomerKey SSE_KEY;
+    private static AmazonS3 S3_CLIENT;
+    private static KeyGenerator KEY_GENERATOR;
+	
+	
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 		// TODO Auto-generated method stub
 		
 		AmazonS3 s3 = S3Factory.getS3Client();
+		
+		
+		KEY_GENERATOR = KeyGenerator.getInstance("AES");
+        KEY_GENERATOR.init(256, new SecureRandom());
+        SSE_KEY = new SSECustomerKey(KEY_GENERATOR.generateKey());
+        
+        System.out.println(SSE_KEY);
 		
 		//final Logger logger = Logger.getLogger(Log4JTest.class);
 		
@@ -66,71 +80,19 @@ public class _01_CreateObject {
 
 //lifecycle.json
 		
-		
-		  String metaKey = "hashvalue";
-	        
-	        //get hash
-		  
-		  MessageDigest SHAmd = MessageDigest.getInstance("SHA-256");
-		  try (InputStream SHAis = Files.newInputStream(Paths.get("C:\\Users\\bavard\\Downloads\\lifecycle.json"));
-		       DigestInputStream SHAdis = new DigestInputStream(SHAis, SHAmd)) 
-		  {
-		    /* Read decorated stream (dis) to EOF as normal... */
-		  }
-		  byte[] SHAdigest = SHAmd.digest();
-		  
-		  String SHAmetaValue = bin2hex(SHAdigest);
-		  
-		  MessageDigest MD5md = MessageDigest.getInstance("MD5");
-		  try (InputStream MD5is = Files.newInputStream(Paths.get("C:\\Users\\bavard\\Downloads\\lifecycle.json"));
-		       DigestInputStream MD5dis = new DigestInputStream(MD5is, MD5md)) 
-		  {
-		    /* Read decorated stream (dis) to EOF as normal... */
-		  }
-		  byte[] MD5digest = MD5md.digest();
-		  
-		  String MD5metaValue = bin2hex(MD5digest);
 
-	        
-	     //   MessageDigest sha256digest = MessageDigest.getInstance("SHA-256");
-	     //   byte[] sha256hash = sha256digest.digest(content.getBytes(StandardCharsets.UTF_8));
-	        
-	        //convert to hex
-	    //    String shametaValue = bin2hex(sha256hash);
-	        
-	    //    MessageDigest md5digest = MessageDigest.getInstance("MD5");
-	   //     byte[] md5hash = md5digest.digest(content.getBytes(StandardCharsets.UTF_8));
-	        
-	        //convert to hex
-	   //     String md5metaValue = bin2hex(md5hash);
-	        
-	        
-	        
-	        System.out.println("SHA256 HASH VALUE IS: " + SHAmetaValue);
-	        System.out.println("MD5 HASH VALUE IS: " + MD5metaValue);
+	      
         
         //add content type
         ObjectMetadata metadata = new ObjectMetadata();
-        
- 
         //metadata.setContentMD5(MD5metaValue);
         //metadata.addUserMetadata("md5hash", MD5metaValue);
-       // metadata.addUserMetadata("sha256hash", SHAmetaValue);
+         metadata.addUserMetadata("test", "shouldbeencrypted");
 
 
-        //PutObjectRequest put = new PutObjectRequest(S3Factory.S3_BUCKET, key, content)
-        //		.withMetadata(metadata);
-      
 
         
-       // s3.putObject(put);
-        		
-       // s3.putObject(S3Factory.S3_BUCKET, key, content);
-        
-        
-        //s3.putObject("testtest",key,content);
-        
-        PutObjectRequest request = new PutObjectRequest(S3Factory.S3_BUCKET, key, file).withMetadata(metadata);
+        PutObjectRequest request = new PutObjectRequest(S3Factory.S3_BUCKET, key, file).withSSECustomerKey(SSE_KEY).withMetadata(metadata);
         
         s3.putObject(request);
 
@@ -141,14 +103,6 @@ public class _01_CreateObject {
         
         //System.out.println(java.lang.System.currentTimeMillis());
 
-	}
-	
-	
-	static String bin2hex(byte[] data) {
-	    StringBuilder hex = new StringBuilder(data.length * 2);
-	    for (byte b : data)
-	        hex.append(String.format("%02x", b & 0xFF));
-	    return hex.toString();
 	}
 
 }
